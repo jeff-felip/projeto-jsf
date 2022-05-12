@@ -1,0 +1,67 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	
+<ui:composition template="./include/layout.xhtml">
+	<ui:define name="head">
+		<h:outputStylesheet name="css/starter-template.css" />
+	</ui:define>
+	<ui:define name="body">
+		<div class="container">
+			<div class="row mt-5">
+				<h1 class="title mx-auto">Gerenciamento de Tarefa</h1>
+			</div>
+			<div class="col sm-12">
+				<h:form id="formTarefa">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="form-group">
+							<label for="">Titulo</label>
+							<h:inputText value="#{tarefaController.tarefa.titulo}"	class="form-control" required="true"/>
+						</div>
+						<div class="form-group">
+							<label>Descrição</label>
+							<h:inputText value="#{tarefaController.tarefa.descricao}"	class="form-control" required="true"/>
+						</div>
+						
+						<div class="form-group">
+							<label>Responsável</label>
+							<h:inputText value="#{tarefaController.tarefa.responsavel}"	class="form-control" required="true"/>
+						</div>
+						
+						<div class="form-group">
+							<label>Deadline</label>
+							<h:inputText value="#{tarefaController.tarefa.deadline}" class="form-control col-sm-4" required="true"/>
+						</div>
+						
+						<div class="form-group">
+							<label>Prioridade</label>
+							<h:selectOneMenu value="#{tarefaController.tarefa.prioridade}"	class="form-control col-sm-4" required="true">
+								<f:selectItem itemLabel="Alta" itemValue="Alta"/>
+								<f:selectItem itemLabel="Normal" itemValue="Normal"/>
+								<f:selectItem itemLabel="Baixa" itemValue="Baixa"/>
+							</h:selectOneMenu>
+						</div>							
+						
+						<h:commandButton action="#{tarefaController.salvar}" value="Cadastrar" class="btn btn-outline-primary col-sm-2" >
+							<f:ajax execute="formTarefa" render=":formTarefa:dtTarefas" />
+						</h:commandButton>
+						
+						<p:button value="Lista De Tarefas" outcome="/listatarefa.xhtml" class="btn-secondary col-sm-2" />
+							
+						
+						
+						</div>
+					</div>	
+				</h:form>
+			</div>
+		</div>
+		
+		<p:messages autoUodate="true" />
+	</ui:define>
+</ui:composition>
+</html>

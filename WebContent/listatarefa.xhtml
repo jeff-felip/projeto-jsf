@@ -1,0 +1,98 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition template="./include/layout.xhtml">
+	<ui:define name="head">
+		<h:outputStylesheet name="css/starter-template.css" />
+	</ui:define>
+	<ui:define name="body">
+		<div class="container">
+			<div class="row mt-5">
+				<h1 class="title mx-auto">Lista de Tarefas</h1>
+			</div>
+			<div class="col sm-12">
+				<h:form id="formTarefa">
+					<div class="row">
+						<div class="col-sm-12">
+							
+							<div class="form-group">
+								<label for="">Titulo</label>
+								<h:inputText value="#{tarefaController.tarefa.titulo}"	class="form-control" />
+							</div>
+						<div class="form-group">
+							<label>Descrição</label>
+							<h:inputText value="#{tarefaController.tarefa.descricao}"	class="form-control" />
+						</div>
+						
+						<div class="form-group">
+							<label>Responsável</label>
+							<h:inputText value="#{tarefaController.tarefa.responsavel}"	class="form-control" />
+						</div>	
+						
+						<div class="form-group">
+							<label>Situação</label>
+							<h:selectOneMenu value="#{tarefaController.tarefa.situacao}"	class="form-control col-sm-4" >
+								<f:selectItem itemLabel="Em Andamento" itemValue="Em Andamento"/>
+								<f:selectItem itemLabel="Concluido" itemValue="Concluido"/>
+							</h:selectOneMenu>
+						</div>					
+						
+						<h:commandButton action="#{tarefaController.buscar}" value="Buscar" class="btn btn-outline-primary col-sm-2">
+							<f:ajax execute="formTarefa" render=":formTarefa:dtTarefas" />
+						</h:commandButton>
+						
+						
+						<h:commandButton action="#{tarefaController.salvar}" value="salvar edição" class="btn btn-outline-primary col-sm-2">
+							<f:ajax execute="formTarefa" render=":formTarefa:dtTarefas" />
+						</h:commandButton>
+						
+						
+						</div>
+					</div>	
+					<br/>
+					<div class="row">
+						<div class="col-sm-12">
+							<h:dataTable value="#{tarefaController.tarefas}" var="c" id="dtTarefas" class="table thead-dark table-bordered table-hover">
+								<h:column scope="col">
+									<f:facet name="header">ID</f:facet>
+									#{c.id}
+								</h:column>
+								<h:column scope="col">
+									<f:facet name="header">Titulo</f:facet>
+									#{c.titulo}
+								</h:column>
+								<h:column scope="col">
+									<f:facet name="header">Responsável</f:facet>
+									#{c.responsavel}
+								</h:column>
+								<h:column scope="col">
+									<f:facet name="header">Situacao</f:facet>
+									#{c.situacao}
+								</h:column>
+								<h:column class="col-sm-8">
+									<f:facet name="header">Ações</f:facet>
+									<h:commandButton action="#{tarefaController.excluir(c)}" value="Deletar" onclick="return confirm('Tem Certeza que deseja apagar o tarefa?')" class="btn btn-outline-danger col-sm-3">
+										<f:ajax render=":formTarefa" />
+									</h:commandButton>
+
+									<h:commandButton action="#{tarefaController.editar(c)}" class="btn btn-outline-secondary col-sm-4 " value="Editar">
+										<f:ajax render=":formTarefa" />
+									</h:commandButton>
+									
+									<h:commandButton action="#{tarefaController.concluir(c)}" class="btn btn-outline-secondary col-sm-4 " value="Concluir">
+										<f:ajax render=":formTarefa" />
+									</h:commandButton>
+									
+								</h:column>
+							</h:dataTable>
+						</div>
+					</div>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

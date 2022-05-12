@@ -1,0 +1,73 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition template="./include/layout.xhtml">
+	<ui:define name="head">
+		<h:outputStylesheet name="css/starter-template.css" />
+	</ui:define>
+	<ui:define name="body">
+		<div class="container">
+			<div class="row mt-5">
+				<h1 class="title mx-auto">Gerenciamento de Cliente</h1>
+			</div>
+			<div class="col sm-12">
+				<h:form id="formCliente">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="form-group">
+							<label for="">Nome</label>
+							<h:inputText value="#{clienteController.cliente.nome}"	class="form-control" />
+						</div>
+						<div class="form-group">
+							<label>E-mail</label>
+							<h:inputText value="#{clienteController.cliente.email}"	class="form-control" />
+						</div>
+						
+						<h:commandButton action="#{clienteController.salvar}" value="Salvar" class="btn btn-outline-primary col-sm-2">
+							<f:ajax execute="formCliente" render=":formCliente:dtClientes" />
+						</h:commandButton>
+						
+						<h:commandButton rendered="#{clienteController.modeEdicao}"	action="#{clienteController.cancelar}" value="Cancelar" class="btn btn-outline-danger col-sm-2 offset-sm-1">
+							<f:ajax render=":formCliente" />
+						</h:commandButton>
+						</div>
+					</div>	
+					<br/>
+					<div class="row">
+						<div class="col-sm-12">
+							<h:dataTable value="#{clienteController.clientes}" var="c" id="dtClientes" class="table thead-dark table-bordered table-hover">
+								<h:column scope="col">
+									<f:facet name="header">ID</f:facet>
+									#{c.id}
+								</h:column>
+								<h:column scope="col">
+									<f:facet name="header">Nome</f:facet>
+									#{c.nome}
+								</h:column>
+								<h:column scope="col">
+									<f:facet name="header">E-mail</f:facet>
+									#{c.email}
+								</h:column>
+								<h:column>
+									<f:facet name="header">Ações</f:facet>
+									<h:commandButton action="#{clienteController.excluir(c)}" value="Deletar" onclick="return confirm('Tem Certeza que deseja apagar o cliente?')" class="btn btn-outline-danger col-sm-5">
+										<f:ajax render=":formCliente" />
+									</h:commandButton>
+
+									<h:commandButton action="#{clienteController.editar(c)}" class="btn btn-outline-secondary col-sm-5 offset-sm-2" value="Editar">
+										<f:ajax render=":formCliente" />
+									</h:commandButton>
+									
+								</h:column>
+							</h:dataTable>
+						</div>
+					</div>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>
