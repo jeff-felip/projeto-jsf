@@ -44,7 +44,7 @@ public class TarefaController {
 		modeEdicao =  false;
 		
 		FacesMessage menssage = new FacesMessage("Cadastrado com sucesso!");
-		FacesContext.getCurrentInstance().addMessage(null, menssage);
+		FacesContext.getCurrentInstance().addMessage("", menssage);
 	}
 	
 	public void cancelar() {
@@ -55,6 +55,9 @@ public class TarefaController {
 	public void excluir(Tarefa c) {
 		tarefas.remove(c);
 		repository.delete(c);
+		
+		FacesMessage menssage = new FacesMessage("Excluído com sucesso!");
+		FacesContext.getCurrentInstance().addMessage("", menssage);
 	}
 	
 	public void editar(Tarefa c) {
@@ -65,6 +68,8 @@ public class TarefaController {
 	public void concluir(Tarefa c) {
 		c.setSituacao("Concluido");
 		repository.save(c);
+		FacesMessage menssage = new FacesMessage("Tarefa Concluída!");
+		FacesContext.getCurrentInstance().addMessage("", menssage);
 	}
 	
 	public void buscar(){

@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 <ui:composition template="./include/layout.xhtml">
 	<ui:define name="head">
 		<h:outputStylesheet name="css/starter-template.css" />
@@ -15,9 +16,9 @@
 			</div>
 			<div class="col sm-12">
 				<h:form id="formTarefa">
+					<p:messages />
 					<div class="row">
 						<div class="col-sm-12">
-							
 							<div class="form-group">
 								<label for="">Titulo</label>
 								<h:inputText value="#{tarefaController.tarefa.titulo}"	class="form-control" />
@@ -35,6 +36,7 @@
 						<div class="form-group">
 							<label>Situação</label>
 							<h:selectOneMenu value="#{tarefaController.tarefa.situacao}"	class="form-control col-sm-4" >
+								<f:selectItem itemLabel="" itemValue=""/>
 								<f:selectItem itemLabel="Em Andamento" itemValue="Em Andamento"/>
 								<f:selectItem itemLabel="Concluido" itemValue="Concluido"/>
 							</h:selectOneMenu>
