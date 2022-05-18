@@ -47,7 +47,7 @@
 						</h:commandButton>
 						
 						
-						<h:commandButton action="#{tarefaController.salvar}" value="salvar edição" class="btn btn-outline-primary col-sm-2">
+						<h:commandButton action="#{tarefaController.salvar}" value="salvar edição" onclick="return confirm('Tem Certeza que deseja editar a tarefa?')" class="btn btn-outline-primary col-sm-2">
 							<f:ajax execute="formTarefa" render=":formTarefa:dtTarefas" />
 						</h:commandButton>
 						
@@ -76,7 +76,7 @@
 								</h:column>
 								<h:column class="col-sm-8">
 									<f:facet name="header">Ações</f:facet>
-									<h:commandButton action="#{tarefaController.excluir(c)}" value="Deletar" onclick="return confirm('Tem Certeza que deseja apagar o tarefa?')" class="btn btn-outline-danger col-sm-3">
+									<h:commandButton action="#{tarefaController.excluir(c)}" value="Deletar" onclick="return confirm('Tem Certeza que deseja apagar a tarefa?')" class="btn btn-outline-danger col-sm-3">
 										<f:ajax render=":formTarefa" />
 									</h:commandButton>
 

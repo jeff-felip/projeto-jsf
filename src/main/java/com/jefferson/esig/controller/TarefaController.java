@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jefferson.esig.model.Tarefa;
 import com.jefferson.esig.repositories.TarefaRepository;
+import com.jefferson.esig.services.TarefaService;
 
 
 @ManagedBean
@@ -20,7 +21,7 @@ import com.jefferson.esig.repositories.TarefaRepository;
 public class TarefaController {
 	
 	@Autowired
-	private TarefaRepository repository;
+	private TarefaService tarefaService;
 	
 	private List<Tarefa> tarefas;
 	
@@ -30,12 +31,12 @@ public class TarefaController {
 	
 	@PostConstruct
 	public void init() {
-		tarefas = repository.findAll();
+		tarefas = tarefaService.TodasTarefas();
 	}
 	
 	public void salvar() {
 		tarefa.setSituacao("Em Andamento");
-		repository.save(tarefa);
+		tarefaService.salvarTarefa(tarefa);
 		 
 		if(!modeEdicao)
 			tarefas.add(tarefa);
@@ -52,22 +53,22 @@ public class TarefaController {
 		modeEdicao = false;
 	}
 	
-	public void excluir(Tarefa c) {
-		tarefas.remove(c);
-		repository.delete(c);
+	public void excluir(Tarefa tarefa) {
+		tarefas.remove(tarefa);
+		tarefaService.DeletarTarefa(tarefa);
 		
 		FacesMessage menssage = new FacesMessage("Excluído com sucesso!");
 		FacesContext.getCurrentInstance().addMessage("", menssage);
 	}
 	
-	public void editar(Tarefa c) {
-		this.tarefa = c;
+	public void editar(Tarefa tarefa) {
+		this.tarefa = tarefa;
 		modeEdicao = true;
 	}
 	
-	public void concluir(Tarefa c) {
-		c.setSituacao("Concluido");
-		repository.save(c);
+	public void concluir(Tarefa tarefa) {
+		tarefa.setSituacao("Concluido");
+		tarefaService.salvarTarefa(tarefa);
 		FacesMessage menssage = new FacesMessage("Tarefa Concluída!");
 		FacesContext.getCurrentInstance().addMessage("", menssage);
 	}
@@ -92,7 +93,7 @@ public class TarefaController {
 			situacao = "%";
 		}
 		
-		tarefas = repository.findByTituloStartingWithAndResponsavelStartingWithAndDescricaoStartingWithAndSituacaoStartingWith(titulo, responsavel, descricao, situacao);
+		tarefas = tarefaService.buscarTarefas(titulo, responsavel, descricao, situacao);
 	}
 
 	public List<Tarefa> getTarefas() {
